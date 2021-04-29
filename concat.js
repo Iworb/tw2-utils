@@ -1,18 +1,7 @@
 const fs = require('fs');
 const path = './dist/tw2-utils';
 (function build() {
-  let res = `// ==UserScript==
-// @name         TW2 Utils
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  Few useful utils
-// @author       Iworb
-// @match        https://*.tribalwars2.com/*
-// @grant        none
-// @noframes
-// @run-at document-end
-// ==/UserScript==
-
+  let res = `
 (function() {
 `;
   const files = [
