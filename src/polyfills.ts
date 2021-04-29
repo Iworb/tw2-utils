@@ -63,3 +63,54 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+declare global {
+  interface EventTarget {
+    delegateEventListener(eventName, childSelector, fn): void;
+  }
+}
+
+((document, EventTarget) => {
+  const elementProto = window.Element.prototype;
+  let matchesFn = elementProto.matches;
+
+  /* Check various vendor-prefixed versions of Element.matches */
+  if (!matchesFn) {
+    ['webkit', 'ms', 'moz'].some((prefix) => {
+      const prefixedFn = prefix + 'MatchesSelector';
+      if (elementProto.hasOwnProperty(prefixedFn)) {
+        matchesFn = elementProto[prefixedFn];
+        return true;
+      }
+    });
+  }
+
+  /* Traverse DOM from event target up to parent, searching for selector */
+  function passedThrough(event, selector, stopAt): Node | boolean {
+    let currentNode = event.target;
+
+    while (true) {
+      if (matchesFn.call(currentNode, selector)) {
+        return currentNode;
+      } else if (currentNode !== stopAt && currentNode !== document.body) {
+        currentNode = currentNode.parentNode;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  /* Extend the EventTarget prototype to add a delegateEventListener() event */
+  EventTarget.prototype.delegateEventListener = function(eName, toFind, fn): void {
+    this.addEventListener(eName, (event) => {
+      const found = passedThrough(event, toFind, event.currentTarget);
+
+      if (found) {
+        // Execute the callback with the context set to the found element
+        // jQuery goes way further, it even has it's own event object
+        fn.call(found, event);
+      }
+    });
+  };
+
+})(window.document, window.EventTarget || window.Element);

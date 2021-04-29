@@ -1,0 +1,19 @@
+<div class="win-main-report box-paper">
+  <table class="tbl-border-light border-thin">
+    <colgroup>
+      <col width="100%">
+    </colgroup>
+    <tbody>
+    <tr class="row-even">
+      <td class="no-border">
+        <div class="officer-description report-description"></div>
+        <div *ngFor="let k of officersKeys" class="report-officer" [ngClass]="officers[k] ? '' : 'hidden'"
+             [matTooltip]="'officers.' + OfficerType[k] | translate" (click)="officers[k] = !officers[k]">
+          <div class="btn-icon btn-orange" [ngClass]="'icon-34x34-premium_officer_' + OfficerType[k]"></div>
+        </div>
+        <div class="report-officer filler"></div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

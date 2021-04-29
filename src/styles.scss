@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/theming";
+
+$primary: mat-palette($mat-blue);
+$accent:  mat-palette($mat-green);
+$warn:    mat-palette($mat-red, A200);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include cdk-overlay();
+@include mat-dialog-theme($theme);
+@include mat-tooltip-theme($theme);
+
+.mat-dialog-container {
+  padding: 0 !important;
+}

@@ -1,0 +1,82 @@
+<ng-container *ngIf="ctx$ | async as ctx; else loading">
+  <header class="win-head">
+    <h2>{{ 'dialogs.provisions.title' | translate }}</h2>
+    <ul class="list-btn">
+      <li><a href="#" class="size-34x34 btn-red icon-26x26-close" mat-dialog-close></a></li>
+    </ul>
+  </header>
+  <table class="tbl-border-light border-thin">
+    <colgroup>
+      <col width="50%">
+      <col width="*">
+    </colgroup>
+    <thead>
+    <tr>
+      <th class="color-light">{{ 'common.building' | translate }}</th>
+      <th class="color-light">{{ 'common.level' | translate }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let building of buildings; let i = index" [ngClass]="i % 2 ? 'row-even' : ''">
+      <td><span [ngClass]="'icon-34x34-building-' + building.type"></span> {{ 'building.' + building.type | translate }}
+      </td>
+      <td class="cell-center">
+        <tw2-progress-bar [formControl]="form.get(building.type)" [max]="building.levels.length"></tw2-progress-bar>
+      </td>
+    </tr>
+  </table>
+  <table class="tbl-border-light border-thin">
+    <colgroup>
+      <col width="50%">
+      <col width="50%">
+    </colgroup>
+    <tbody>
+    <tr>
+      <td class="content">{{ 'common.points' | translate }}</td>
+      <td>{{ ctx.results.points }}</td>
+    </tr>
+    <tr>
+      <td class="content">{{ 'common.provisions' | translate }}</td>
+      <td>
+        <tw2-progress-bar [value]="ctx.results.provisions" [max]="ctx.results.totalProvisions"
+                          [formatter]="farmFormatter"></tw2-progress-bar>
+      </td>
+    </tr>
+    <tr>
+      <td class="content">{{ 'dialogs.provisions.provisionsLeftForTroops' | translate }}</td>
+      <td>
+        <span class="icon-bg-black icon-34x34-resource-food"></span> {{ ctx.results.leftProvisions }}
+        ({{ ctx.results.leftProvisions1 }} - {{ ctx.results.leftProvisions2 }})
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <table class="tbl-border-light border-thin">
+    <colgroup>
+      <col width="100%">
+    </colgroup>
+    <tbody>
+    <tr>
+      <td class="content">{{ 'dialogs.provisions.resources' | translate }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <table class="tbl-border-light border-thin">
+    <colgroup>
+      <col width="25%">
+      <col width="25%">
+      <col width="25%">
+      <col width="25%">
+    </colgroup>
+    <tbody>
+    <tr>
+      <td><span class="icon-bg-black icon-34x34-resource-wood"></span> {{ resourceFormatter(ctx.results.wood) }}</td>
+      <td><span class="icon-bg-black icon-34x34-resource-clay"></span> {{ resourceFormatter(ctx.results.clay) }}</td>
+      <td><span class="icon-bg-black icon-34x34-resource-iron"></span> {{ resourceFormatter(ctx.results.iron) }}</td>
+      <td><span class="icon-bg-black icon-34x34-time"></span> {{ timeFormatter(ctx.results.time) }}</td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>
+
+<ng-template #loading>loading</ng-template>
