@@ -3,21 +3,18 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'tw2-progress-bar',
-  templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss'],
+  selector: 'tw2-luck-bar',
+  templateUrl: './luck-bar.component.html',
+  styleUrls: ['./luck-bar.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ProgressBarComponent),
+      useExisting: forwardRef(() => LuckBarComponent),
       multi: true,
     },
   ],
 })
-export class ProgressBarComponent implements ControlValueAccessor {
-
-  @Input() formatter: (value: number, max?: number) => string;
-  @Input() max = 1;
+export class LuckBarComponent implements ControlValueAccessor {
 
   @Input()
   set value(value: string | number) {
@@ -32,9 +29,9 @@ export class ProgressBarComponent implements ControlValueAccessor {
   viewValue = 0;
 
   private onTouched = () => {
-  }
+  };
   private onChange: (value: number) => void = () => {
-  }
+  };
 
   writeValue(obj: any): void {
     this.viewValue = obj ? coerceNumberProperty(obj) : 0;
@@ -52,24 +49,24 @@ export class ProgressBarComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  get maxNumber(): number {
-    return coerceNumberProperty(this.max);
-  }
-
   get percent(): number {
-    return 100 * this.viewValue / this.maxNumber;
+    return Math.abs(100 * this.viewValue / 15);
   }
 
-  onClick(e: MouseEvent): void {
+  onClick(type: 'luck' | 'unluck' | 'zero', e: MouseEvent): void {
     if (this.disabled) {
       return;
     }
+    let percent;
     try {
-      const w = ((e.target as HTMLElement).closest('.progress-wrapper') as HTMLElement)?.offsetWidth;
-      const percent = e.offsetX / w;
-      this.viewValue = Math.ceil(percent * this.maxNumber);
+      if (type === 'zero') {
+        percent = 0;
+      } else {
+        const w = ((e.target as HTMLElement).closest('.progress-wrapper') as HTMLElement)?.offsetWidth;
+        percent = (type === 'luck' ? e.offsetX : e.offsetX - w) / w;
+      }
+      this.viewValue = Math.ceil(percent * 15);
       this.onChange(this.viewValue);
     } catch (err) {}
   }
-
 }

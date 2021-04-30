@@ -1,0 +1,19 @@
+<div class="report-luck">
+  <div class="size-34x34 icon-bg-black icon-34x34-raven"></div>
+  <div class="bar-wrapper">
+    <div class="bar">
+      <div class="progress-wrapper progress-big progress-red" (click)="onClick('unluck', $event)">
+        <div *ngIf="value < 0" class="progress-text">{{ -1 * value }}%</div>
+        <div [ngClass]="value < 0 ? 'progress-bar' : ''" [style.width.%]="percent"></div>
+      </div>
+    </div>
+    <div class="bar-separator text-center" (click)="onClick('zero', $event)">0</div>
+    <div class="bar">
+      <div class="progress-wrapper progress-big progress-green" (click)="onClick('luck', $event)">
+        <div *ngIf="value > 0" class="progress-text">{{ value }}%</div>
+        <div [ngClass]="value > 0 ? 'progress-bar' : ''" [style.width.%]="percent"></div>
+      </div>
+    </div>
+  </div>
+  <div class="size-34x34 icon-bg-black icon-34x34-clover"></div>
+</div>

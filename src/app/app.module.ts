@@ -46,7 +46,7 @@ export class AppModule {
       dialog.open(ProvisionsDialogComponent);
     });
     document.documentElement.delegateEventListener('click', 'td', (...ar) => {
-      console.log('click td', ar);
+      // console.log('click td', ar);
     });
     storage.get('language').pipe(take(1)).subscribe((l) => {
       const savedLanguage = availableLanguages.includes(l as string) ? l as string : null;

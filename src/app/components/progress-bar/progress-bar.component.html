@@ -1,4 +1,4 @@
 <div class="progress-wrapper progress-big" (click)="onClick($event)">
-  <div class="progress-bar" [style.width.%]="percent" style="width: 99%;"></div>
+  <div class="progress-bar" [style.width.%]="percent"></div>
   <div class="progress-text"><span>{{ formatter ? formatter(viewValue, maxNumber) : viewValue }}</span></div>
 </div>

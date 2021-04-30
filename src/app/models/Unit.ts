@@ -1,16 +1,16 @@
 import { Cost } from './Cost';
 
 export enum UnitType {
-  Spearman = 'spearman',
-  Swordsman = 'swordsman',
-  Axeman = 'axeman',
+  Spearman = 'spear',
+  Swordsman = 'sword',
+  Axeman = 'axe',
   Archer = 'archer',
   LightCavalry = 'light_cavalry',
   MountedArcher = 'mounted_archer',
   HeavyCavalry = 'heavy_cavalry',
   Ram = 'ram',
   Catapult = 'catapult',
-  Berserker = 'berserker',
+  Berserker = 'doppelsoldner',
   Trebuchet = 'trebuchet',
   Snob = 'snob',
   Knight = 'knight',

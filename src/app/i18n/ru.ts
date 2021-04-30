@@ -2,6 +2,7 @@ export const translationsRu = {
   common: {
     building: 'Здание',
     level: 'Уровень',
+    morale: 'Мораль',
     points: 'Очки',
     provisions: 'Провизия'
   },
@@ -33,10 +34,35 @@ export const translationsRu = {
     supporter: 'Тактик',
   },
   dialogs: {
+    battle: {
+      result: {
+        defeat: 'Поражение',
+        victoryLossless: 'Победа (без потерь)',
+        victory: 'Победа'
+      },
+      attackerAndTroops: 'Атакующий и войска',
+      defenderAndLosses: 'Обороняющийся и потери',
+      title: 'Симулятор боя'
+    },
     provisions: {
       provisionsLeftForTroops: 'Провизия для войск',
       resources: 'Ресурсы на постройку',
       title: 'Калькулятор провизии'
     }
+  },
+  units: {
+    spear: 'Копейщик',
+    sword: 'Мечник',
+    axe: 'Топорник',
+    archer: 'Лучник',
+    light_cavalry: 'Лёгкая кавалерия',
+    mounted_archer: 'Конный лучник',
+    heavy_cavalry: 'Тяжелая кавалерия',
+    ram: 'Таран',
+    catapult: 'Катапульта',
+    doppelsoldner: 'Берсерк',
+    trebuchet: 'Требушет',
+    snob: 'Дворянин',
+    knight: 'Паладин',
   },
 };

@@ -1,19 +1,132 @@
-<div class="win-main-report box-paper">
-  <table class="tbl-border-light border-thin">
-    <colgroup>
-      <col width="100%">
-    </colgroup>
-    <tbody>
-    <tr class="row-even">
-      <td class="no-border">
-        <div class="officer-description report-description"></div>
-        <div *ngFor="let k of officersKeys" class="report-officer" [ngClass]="officers[k] ? '' : 'hidden'"
-             [matTooltip]="'officers.' + OfficerType[k] | translate" (click)="officers[k] = !officers[k]">
-          <div class="btn-icon btn-orange" [ngClass]="'icon-34x34-premium_officer_' + OfficerType[k]"></div>
-        </div>
-        <div class="report-officer filler"></div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<ng-container *ngIf="ctx$ | async as ctx">
+  <header class="win-head">
+    <h2>{{ 'dialogs.battle.title' | translate }}</h2>
+    <ul class="list-btn">
+      <li><a href="#" class="size-34x34 btn-red icon-26x26-close" mat-dialog-close></a></li>
+    </ul>
+  </header>
+  <div class="win-main win-main-report">
+    <div class="box-paper footer" [formGroup]="form">
+      <table class="tbl-border-light tbl-result">
+        <thead>
+        <tr>
+          <th>
+            <div class="text-center">{{ 'dialogs.battle.result.' + ctx.result | translate }}</div>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <table class="tbl-border-light border-thin">
+              <tbody>
+              <tr>
+                <td>
+                  <tw2-luck-bar formControlName="luck"></tw2-luck-bar>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <table class="tbl-border-light border-thin">
+              <colgroup>
+                <col width="20%">
+                <col width="80%">
+              </colgroup>
+              <tbody>
+              <tr>
+                <td class="content">{{ 'common.morale' | translate }}</td>
+                <td>
+                  <tw2-progress-bar formControlName="morale" max="100"></tw2-progress-bar>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <table class="tbl-border-light border-thin" formGroupName="attacker">
+              <colgroup>
+                <col width="50%">
+                <col width="50%">
+              </colgroup>
+              <thead>
+              <tr>
+                <th colspan="2" class="color-light">
+                  <span>{{ 'dialogs.battle.attackerAndTroops' | translate }}</span>
+                  <span class="icon-34x34-building-church"></span>
+                  <span class="modifier-number text-red"
+                        [ngClass]="ctx.attackModifier < 100 ? 'text-red' : 'text-green'">
+                    {{ ctx.attackModifier }}%
+                  </span>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="row-even">
+                <td colspan="2" class="no-border">
+                  <div class="officer-description report-description"></div>
+                  <div *ngFor="let k of officersValues" class="report-officer" [ngClass]="officers[k] ? '' : 'hidden'"
+                       [matTooltip]="'officers.' + k | translate" (click)="officers[k] = !officers[k]">
+                    <div class="btn-icon btn-orange" [ngClass]="'icon-34x34-premium_officer_' + k"></div>
+                  </div>
+                  <div class="report-officer filler"></div>
+                </td>
+              </tr>
+              <tr class="row-even">
+                <td colspan="2" class="no-border" [ngClass]="officers[OfficerType.Medic] ? 'expanded' : ''">
+                  <div class="unit-description report-description">
+                    <span class="icon-20x20-report-amount"></span>
+                    <span class="icon-20x20-report-losses"></span>
+                  </div>
+                  <div class="report-unit" *ngFor="let unit of units; let i = index"
+                       [ngClass]="{'hidden': !form.get('attacker.' + unit.type).value, 'even': i % 2 !== 0}">
+                    <div class="btn-icon btn-orange" [ngClass]="'icon-34x34-unit-' + unit.type"
+                         [matTooltip]="'units.' + unit.type | translate"></div>
+                    <div class="report-unit-count" [matTooltip]="form.get('attacker.' + unit.type).value">
+                      <input [formControlName]="unit.type">
+                    </div>
+                    <div class="report-unit-count text-red">0</div>
+                    <div class="report-unit-count text-dark-green" *ngIf="officers[OfficerType.Medic]">0</div>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <table class="tbl-border-light border-thin" formGroupName="defender">
+              <colgroup>
+                <col width="50%">
+                <col width="50%">
+              </colgroup>
+              <thead>
+              <tr>
+                <th colspan="2" class="color-light"><span>{{ 'dialogs.battle.defenderAndLosses' | translate }}</span>
+                  <span
+                    class="modifier-number"
+                    [ngClass]="ctx.defendModifier < 100 ? 'text-red' : 'text-green'">{{ ctx.defendModifier }}%</span>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="row-even">
+                <td colspan="2" class="no-border">
+                  <div class="unit-description report-description">
+                    <span class="icon-20x20-report-amount"></span>
+                    <span class="icon-20x20-report-losses"></span>
+                  </div>
+                  <div class="report-unit" *ngFor="let unit of units; let i = index"
+                       [ngClass]="{'hidden': !form.get('defender.' + unit.type).value, 'even': i % 2 !== 0}">
+                    <div class="btn-icon btn-orange" [ngClass]="'icon-34x34-unit-' + unit.type"
+                         [matTooltip]="'units.' + unit.type | translate"></div>
+                    <div class="report-unit-count" [matTooltip]="form.get('defender.' + unit.type).value">
+                      <input [formControlName]="unit.type">
+                    </div>
+                    <div class="report-unit-count text-red">0</div>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>

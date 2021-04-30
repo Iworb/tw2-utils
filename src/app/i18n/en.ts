@@ -2,6 +2,7 @@ export const translationsEn = {
   common: {
     building: 'Building',
     level: 'Level',
+    morale: 'Morale',
     points: 'Points',
     provisions: 'Provisions'
   },
@@ -33,10 +34,35 @@ export const translationsEn = {
     supporter: 'Tactician',
   },
   dialogs: {
+    battle: {
+      result: {
+        defeat: 'Defeat',
+        victoryLossless: 'Victory (lossless)',
+        victory: 'Victory'
+      },
+      attackerAndTroops: 'Attacker and troops',
+      defenderAndLosses: 'Defender and losses',
+      title: 'Battle simulator'
+    },
     provisions: {
       provisionsLeftForTroops: 'Provisions for troops',
       resources: 'Resources for building',
       title: 'Provisions calculator'
     }
+  },
+  units: {
+    spear: 'Spearman',
+    sword: 'Swordsman',
+    axe: 'Axeman',
+    archer: 'Archer',
+    light_cavalry: 'Light Cavalry',
+    mounted_archer: 'Mounted Archer',
+    heavy_cavalry: 'Heavy Cavalry',
+    ram: 'Ram',
+    catapult: 'Catapult',
+    doppelsoldner: 'Berserker',
+    trebuchet: 'Trebuchet',
+    snob: 'Snob',
+    knight: 'Knight',
   },
 };

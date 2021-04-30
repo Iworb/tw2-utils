@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = './dist/tw2-utils';
 (function build() {
-  let res = `
-(function() {
+  let res = `(function() {
 `;
   const files = [
     path + '/polyfills.js',
